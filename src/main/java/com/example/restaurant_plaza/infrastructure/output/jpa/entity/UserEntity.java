@@ -1,6 +1,5 @@
 package com.example.restaurant_plaza.infrastructure.output.jpa.entity;
 
-import com.example.restaurant_plaza.domain.model.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
@@ -17,31 +16,31 @@ public class UserEntity {
     private Long id;
 
     @Size(max = 255)
-    @Column(name = "dni")
+    @Column(name = "dni", nullable = false)
     private String dni;
 
     @Size(max = 255)
-    @Column(name = "email")
+    @Column(name = "email", nullable = false)
     private String email;
 
     @Size(max = 255)
-    @Column(name = "last_name")
+    @Column(name = "last_name", nullable = false)
     private String lastName;
 
     @Size(max = 255)
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
 
     @Size(max = 255)
-    @Column(name = "password")
+    @Column(name = "password", nullable = false)
     private String password;
 
     @Size(max = 255)
-    @Column(name = "phone_number")
+    @Column(name = "phone_number", nullable = false)
     private String phoneNumber;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "role_id")
+    @JoinColumn(name = "role_id", nullable = false)
     private RoleEntity role;
 
 }
