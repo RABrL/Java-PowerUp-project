@@ -4,6 +4,7 @@ import com.example.restaurant_plaza.application.dto.response.UserResponseDto;
 import com.example.restaurant_plaza.domain.model.Role;
 import com.example.restaurant_plaza.domain.model.User;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
@@ -18,6 +19,7 @@ public interface IUserResponseMapper {
 
     IRoleDtoMapper INSTANCE = Mappers.getMapper(IRoleDtoMapper.class);
 
+    @Mapping(source = "user.name", target = "name")
     UserResponseDto toResponse(User user, Role role);
 
     default List<UserResponseDto> toResponseList(List<User> userList, List<Role> roleList) {
@@ -27,7 +29,7 @@ public interface IUserResponseMapper {
         return userList.stream()
                 .map(user -> {
                     UserResponseDto userResponse = new UserResponseDto();
-                    userResponse.setNameUser(user.getName());
+                    userResponse.setName(user.getName());
                     userResponse.setLastName(user.getLastName());
                     userResponse.setDni(user.getDni());
                     userResponse.setPhoneNumber(user.getPhoneNumber());

@@ -27,10 +27,9 @@ public class UserHandler implements IUserHandler {
     private final IRoleDtoMapper roleDtoMapper;
     @Override
     public void saveUser(UserRequestDto userRequestDto) {
-        Long roleId = getRoleByName(userRequestDto.getRoleName()).getId();
-        userRequestDto.setRoleName(Long.toString(roleId));
+        //if(!isValidEmail(userRequestDto.getEmail())) return throw new Exception();
+        userRequestDto.setRoleName(Long.toString(getRoleId(userRequestDto)));
         User user = userRequestMapper.toUser(userRequestDto);
-        System.out.println("RoleId user:" + user.getRoleId());
         userServicePort.saveUser(user);
     }
 
@@ -48,10 +47,10 @@ public class UserHandler implements IUserHandler {
     @Override
     public void updateUser(UserRequestDto userRequestDto) {
         User oldUser = userServicePort.getUserByDni(userRequestDto.getDni());
-        Role newRole = getRoleByName(userRequestDto.getRoleName());
+        userRequestDto.setRoleName(Long.toString(getRoleId(userRequestDto)));
         User newUser = userRequestMapper.toUser(userRequestDto);
         newUser.setId(oldUser.getId());
-        newUser.setRoleId(newRole.getId());
+        userServicePort.updateUser(newUser);
     }
 
     @Override
@@ -63,5 +62,9 @@ public class UserHandler implements IUserHandler {
         return roleServicePort.getAllRoles().stream()
                 .filter(role -> role.getName().equals(roleName))
                 .findFirst().orElse(null);
+    }
+
+    public Long getRoleId(UserRequestDto userRequestDto) {
+        return getRoleByName(userRequestDto.getRoleName()).getId();
     }
 }

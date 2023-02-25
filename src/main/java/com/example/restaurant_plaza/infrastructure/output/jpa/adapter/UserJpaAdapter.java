@@ -17,6 +17,7 @@ public class UserJpaAdapter implements IUserPersistencePort {
 
     private final IUserRepository userRepository;
     private final IUserEntityMapper userEntityMapper;
+
     @Override
     public void saveUser(User user) {
         if(userRepository.findByDni(user.getDni()).isPresent()) {

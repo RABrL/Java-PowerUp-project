@@ -18,19 +18,19 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/api/user")
 @RequiredArgsConstructor
 public class UserRestController {
 
     private final IUserHandler userHandler;
 
-    @PostMapping("/save")
+    @PostMapping
     public ResponseEntity<Void> saveUser(@RequestBody UserRequestDto userRequestDto){
         userHandler.saveUser(userRequestDto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @GetMapping("/")
+    @GetMapping
     public ResponseEntity<List<UserResponseDto>> getAllUsers() {
         return ResponseEntity.ok(userHandler.getAllUsers());
     }
@@ -40,7 +40,7 @@ public class UserRestController {
         return ResponseEntity.ok(userHandler.getUserByDni(dni));
     }
 
-    @PutMapping("/update")
+    @PutMapping
     public ResponseEntity<Void> updateUser(@RequestBody UserRequestDto userRequestDto) {
         userHandler.updateUser(userRequestDto);
         return ResponseEntity.noContent().build();

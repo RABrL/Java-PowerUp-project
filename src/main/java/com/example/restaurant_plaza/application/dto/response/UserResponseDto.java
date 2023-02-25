@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UserResponseDto {
-    private String nameUser;
+    private String name;
     private String lastName;
     private String dni;
     private String phoneNumber;
