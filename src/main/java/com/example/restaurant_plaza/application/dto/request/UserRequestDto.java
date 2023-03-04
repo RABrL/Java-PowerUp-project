@@ -1,6 +1,5 @@
 package com.example.restaurant_plaza.application.dto.request;
 
-import com.example.restaurant_plaza.domain.model.Role;
 import lombok.Getter;
 import lombok.Setter;
 
