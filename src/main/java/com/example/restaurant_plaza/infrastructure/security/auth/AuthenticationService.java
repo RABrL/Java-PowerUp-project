@@ -20,7 +20,6 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AuthenticationService {
   private final IUserRepository userRepository;
-  private final IRoleRepository roleRepository;
   private final IUserRequestMapper userRequestMapper;
   private final IUserEntityMapper userEntityMapper;
   private final PasswordEncoder passwordEncoder;
