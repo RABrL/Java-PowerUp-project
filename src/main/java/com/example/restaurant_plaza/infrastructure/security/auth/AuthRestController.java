@@ -16,16 +16,12 @@ public class AuthRestController {
   private final AuthenticationService service;
 
   @PostMapping("/register")
-  public ResponseEntity<AuthenticationResponse> register (
-          @RequestBody UserRequestDto request
-  ) {
+  public ResponseEntity<AuthenticationResponse> register ( @RequestBody UserRequestDto request ) {
     return ResponseEntity.ok(service.register(request));
   }
 
   @PostMapping("/login")
-  public ResponseEntity<AuthenticationResponse> login (
-          @RequestBody LoginRequest request
-  ) {
+  public ResponseEntity<AuthenticationResponse> login ( @RequestBody LoginRequest request ) {
     return ResponseEntity.ok(service.login(request));
   }
 }

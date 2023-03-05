@@ -10,10 +10,8 @@ import com.example.restaurant_plaza.domain.api.IRoleServicePort;
 import com.example.restaurant_plaza.domain.api.IUserServicePort;
 import com.example.restaurant_plaza.domain.model.Role;
 import com.example.restaurant_plaza.domain.model.User;
-import com.example.restaurant_plaza.infrastructure.security.config.JwtService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

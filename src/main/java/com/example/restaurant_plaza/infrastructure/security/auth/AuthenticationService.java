@@ -1,9 +1,7 @@
 package com.example.restaurant_plaza.infrastructure.security.auth;
 
 import com.example.restaurant_plaza.application.dto.request.UserRequestDto;
-import com.example.restaurant_plaza.application.handler.impl.UserHandler;
 import com.example.restaurant_plaza.application.mapper.IUserRequestMapper;
-import com.example.restaurant_plaza.domain.model.User;
 import com.example.restaurant_plaza.infrastructure.output.jpa.entity.RoleEntity;
 import com.example.restaurant_plaza.infrastructure.output.jpa.entity.UserEntity;
 import com.example.restaurant_plaza.infrastructure.output.jpa.mapper.IUserEntityMapper;
@@ -28,6 +26,7 @@ public class AuthenticationService {
   private final PasswordEncoder passwordEncoder;
   private final JwtService jwtService;
   private final AuthenticationManager authenticationManager;
+
   public AuthenticationResponse register(UserRequestDto request) {
     request.setRoleName(Long.toString(4));
     UserEntity userEntity = userEntityMapper.toEntity(userRequestMapper.toUser(request));
