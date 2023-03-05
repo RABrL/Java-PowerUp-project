@@ -1,10 +1,14 @@
 package com.example.restaurant_plaza.application.dto.request;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Getter
-@Setter
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserRequestDto {
     private String name;
     private String lastName;

@@ -10,8 +10,10 @@ import com.example.restaurant_plaza.domain.api.IRoleServicePort;
 import com.example.restaurant_plaza.domain.api.IUserServicePort;
 import com.example.restaurant_plaza.domain.model.Role;
 import com.example.restaurant_plaza.domain.model.User;
+import com.example.restaurant_plaza.infrastructure.security.config.JwtService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,7 +29,6 @@ public class UserHandler implements IUserHandler {
     private final IRoleDtoMapper roleDtoMapper;
     @Override
     public void saveUser(UserRequestDto userRequestDto) {
-        //if(!isValidEmail(userRequestDto.getEmail())) return throw new Exception();
         userRequestDto.setRoleName(Long.toString(getRoleId(userRequestDto)));
         User user = userRequestMapper.toUser(userRequestDto);
         userServicePort.saveUser(user);
