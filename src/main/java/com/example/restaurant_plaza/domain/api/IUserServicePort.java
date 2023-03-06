@@ -12,6 +12,8 @@ public interface IUserServicePort {
 
     User getUserByDni(String dni);
 
+    User getUserByEmail(String email);
+
     void updateUser(User user);
 
     void deleteUserByDni(String dni);

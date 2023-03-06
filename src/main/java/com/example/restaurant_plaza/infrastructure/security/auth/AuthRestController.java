@@ -1,6 +1,7 @@
 package com.example.restaurant_plaza.infrastructure.security.auth;
 
 import com.example.restaurant_plaza.application.dto.request.UserRequestDto;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,12 +17,12 @@ public class AuthRestController {
   private final AuthenticationService service;
 
   @PostMapping("/register")
-  public ResponseEntity<AuthenticationResponse> register ( @RequestBody UserRequestDto request ) {
+  public ResponseEntity<AuthenticationResponse> register (@Valid @RequestBody UserRequestDto request) {
     return ResponseEntity.ok(service.register(request));
   }
 
   @PostMapping("/login")
-  public ResponseEntity<AuthenticationResponse> login ( @RequestBody LoginRequest request ) {
+  public ResponseEntity<AuthenticationResponse> login (@Valid @RequestBody LoginRequest request ) {
     return ResponseEntity.ok(service.login(request));
   }
 }

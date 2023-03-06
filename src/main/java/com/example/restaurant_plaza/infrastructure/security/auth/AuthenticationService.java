@@ -2,10 +2,12 @@ package com.example.restaurant_plaza.infrastructure.security.auth;
 
 import com.example.restaurant_plaza.application.dto.request.UserRequestDto;
 import com.example.restaurant_plaza.application.mapper.IUserRequestMapper;
+import com.example.restaurant_plaza.domain.api.IUserServicePort;
+import com.example.restaurant_plaza.domain.spi.IUserPersistencePort;
+import com.example.restaurant_plaza.infrastructure.exception.UserNotFoundException;
 import com.example.restaurant_plaza.infrastructure.output.jpa.entity.RoleEntity;
 import com.example.restaurant_plaza.infrastructure.output.jpa.entity.UserEntity;
 import com.example.restaurant_plaza.infrastructure.output.jpa.mapper.IUserEntityMapper;
-import com.example.restaurant_plaza.infrastructure.output.jpa.repository.IRoleRepository;
 import com.example.restaurant_plaza.infrastructure.output.jpa.repository.IUserRepository;
 
 import com.example.restaurant_plaza.infrastructure.security.config.JwtService;
@@ -22,6 +24,7 @@ public class AuthenticationService {
   private final IUserRepository userRepository;
   private final IUserRequestMapper userRequestMapper;
   private final IUserEntityMapper userEntityMapper;
+  private final IUserServicePort userServicePort;
   private final PasswordEncoder passwordEncoder;
   private final JwtService jwtService;
   private final AuthenticationManager authenticationManager;
@@ -53,8 +56,7 @@ public class AuthenticationService {
                     request.getPassword()
             )
     );
-    var user = userRepository.findByEmail(request.getEmail())
-            .orElseThrow();
+    var user = userEntityMapper.toEntity(userServicePort.getUserByEmail(request.getEmail()));
     var jwtToken = jwtService.generateToken(user);
     return AuthenticationResponse.builder()
             .token(jwtToken)
