@@ -15,8 +15,8 @@ public class UserUseCase implements IUserServicePort {
     }
 
     @Override
-    public void saveUser(User user) {
-        userPersistencePort.saveUser(user);
+    public String saveUser(User user) {
+        return userPersistencePort.saveUser(user);
     }
 
     @Override
@@ -30,6 +30,11 @@ public class UserUseCase implements IUserServicePort {
     }
 
     @Override
+    public User getUserByEmail(String email) {
+        return userPersistencePort.getUserByEmail(email);
+    }
+
+    @Override
     public void updateUser(User user) {
         userPersistencePort.updateUser(user);
     }
@@ -38,4 +43,10 @@ public class UserUseCase implements IUserServicePort {
     public void deleteUserByDni(String dni) {
         userPersistencePort.deleteUserByDni(dni);
     }
+
+    @Override
+    public String login(String email, String password) {
+        return userPersistencePort.login(email, password);
+    }
+
 }

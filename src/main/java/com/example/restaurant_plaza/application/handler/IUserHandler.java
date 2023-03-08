@@ -1,12 +1,15 @@
 package com.example.restaurant_plaza.application.handler;
 
+import com.example.restaurant_plaza.application.dto.request.LoginRequestDto;
 import com.example.restaurant_plaza.application.dto.request.UserRequestDto;
+import com.example.restaurant_plaza.application.dto.response.AuthResponseDto;
 import com.example.restaurant_plaza.application.dto.response.UserResponseDto;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
 public interface IUserHandler {
-    void saveUser(UserRequestDto userRequestDto);
+    void saveUser(@NotNull UserRequestDto userRequestDto, Long roleId);
 
     List<UserResponseDto> getAllUsers();
 
@@ -15,4 +18,8 @@ public interface IUserHandler {
     void updateUser(UserRequestDto userRequestDto);
 
     void deleteUserByDni(String dni);
+
+    AuthResponseDto register(UserRequestDto userRequestDto);
+
+    AuthResponseDto login(LoginRequestDto loginRequestDto);
 }

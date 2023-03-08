@@ -6,13 +6,17 @@ import java.util.List;
 
 public interface IUserServicePort {
 
-    void saveUser(User user);
+    String saveUser(User user);
 
     List<User> getAllUsers();
 
     User getUserByDni(String dni);
 
+    User getUserByEmail(String email);
+
     void updateUser(User user);
 
     void deleteUserByDni(String dni);
+
+    String login(String email, String password);
 }
