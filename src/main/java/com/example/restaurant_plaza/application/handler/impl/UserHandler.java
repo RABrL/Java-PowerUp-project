@@ -1,17 +1,18 @@
 package com.example.restaurant_plaza.application.handler.impl;
 
+import com.example.restaurant_plaza.application.dto.request.LoginRequestDto;
 import com.example.restaurant_plaza.application.dto.request.UserRequestDto;
+import com.example.restaurant_plaza.application.dto.response.AuthResponseDto;
 import com.example.restaurant_plaza.application.dto.response.UserResponseDto;
 import com.example.restaurant_plaza.application.handler.IUserHandler;
-import com.example.restaurant_plaza.application.mapper.IRoleDtoMapper;
 import com.example.restaurant_plaza.application.mapper.IUserRequestMapper;
 import com.example.restaurant_plaza.application.mapper.IUserResponseMapper;
 import com.example.restaurant_plaza.domain.api.IRoleServicePort;
 import com.example.restaurant_plaza.domain.api.IUserServicePort;
-import com.example.restaurant_plaza.domain.model.Role;
 import com.example.restaurant_plaza.domain.model.User;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,11 +25,10 @@ public class UserHandler implements IUserHandler {
     private final IRoleServicePort roleServicePort;
     private final IUserRequestMapper userRequestMapper;
     private final IUserResponseMapper userResponseMapper;
-    private final IRoleDtoMapper roleDtoMapper;
+
     @Override
-    public void saveUser(UserRequestDto userRequestDto) {
-        //if(!isValidEmail(userRequestDto.getEmail())) return throw new Exception();
-        userRequestDto.setRoleName(Long.toString(getRoleId(userRequestDto)));
+    public void saveUser(@NotNull UserRequestDto userRequestDto, Long roleId) {
+        userRequestDto.setRoleId(roleId);
         User user = userRequestMapper.toUser(userRequestDto);
         userServicePort.saveUser(user);
     }
@@ -45,9 +45,8 @@ public class UserHandler implements IUserHandler {
     }
 
     @Override
-    public void updateUser(UserRequestDto userRequestDto) {
+    public void updateUser(@NotNull UserRequestDto userRequestDto) {
         User oldUser = userServicePort.getUserByDni(userRequestDto.getDni());
-        userRequestDto.setRoleName(Long.toString(getRoleId(userRequestDto)));
         User newUser = userRequestMapper.toUser(userRequestDto);
         newUser.setId(oldUser.getId());
         userServicePort.updateUser(newUser);
@@ -58,13 +57,16 @@ public class UserHandler implements IUserHandler {
         userServicePort.deleteUserByDni(dni);
     }
 
-    public Role getRoleByName(String roleName) {
-        return roleServicePort.getAllRoles().stream()
-                .filter(role -> role.getName().equals(roleName))
-                .findFirst().orElse(null);
+    @Override
+    public AuthResponseDto register(@NotNull UserRequestDto request) {
+        request.setRoleId(1L);
+        String jwtToken = userServicePort.saveUser(userRequestMapper.toUser(request));
+        return AuthResponseDto.builder().token(jwtToken).build();
     }
 
-    public Long getRoleId(UserRequestDto userRequestDto) {
-        return getRoleByName(userRequestDto.getRoleName()).getId();
+    @Override
+    public AuthResponseDto login(@NotNull LoginRequestDto request) {
+        String jwtToken = userServicePort.login(request.getEmail(), request.getPassword());
+        return AuthResponseDto.builder().token(jwtToken).build();
     }
 }

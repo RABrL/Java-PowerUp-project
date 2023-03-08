@@ -12,9 +12,12 @@ import com.example.restaurant_plaza.infrastructure.output.jpa.mapper.IRoleEntity
 import com.example.restaurant_plaza.infrastructure.output.jpa.mapper.IUserEntityMapper;
 import com.example.restaurant_plaza.infrastructure.output.jpa.repository.IRoleRepository;
 import com.example.restaurant_plaza.infrastructure.output.jpa.repository.IUserRepository;
+import com.example.restaurant_plaza.infrastructure.security.config.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @RequiredArgsConstructor
@@ -24,10 +27,16 @@ public class BeanConfiguration {
     private final IUserEntityMapper userEntityMapper;
     private final IRoleRepository roleRepository;
     private final IRoleEntityMapper roleEntityMapper;
+    private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
+    private final AuthenticationManager authenticationManager;
 
     @Bean
     public IUserPersistencePort userPersistencePort() {
-        return new UserJpaAdapter(userRepository,userEntityMapper);
+        return new UserJpaAdapter(
+                userRepository, userEntityMapper,
+                passwordEncoder, jwtService, authenticationManager
+        );
     }
 
     @Bean
