@@ -1,4 +1,4 @@
-package com.example.restaurant_plaza.infrastructure.security.auth;
+package com.example.restaurant_plaza.application.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class LoginRequest {
+public class LoginRequestDto {
   @NotBlank
   private String email;
   private String password;

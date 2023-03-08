@@ -1,4 +1,4 @@
-package com.example.restaurant_plaza.infrastructure.security.auth;
+package com.example.restaurant_plaza.application.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthenticationResponse {
+public class AuthResponseDto {
 
   private String token;
 }

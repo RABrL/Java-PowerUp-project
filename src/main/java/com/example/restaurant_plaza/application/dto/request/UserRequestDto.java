@@ -27,5 +27,5 @@ public class UserRequestDto {
     private String email;
     @NotBlank(message = "Password is mandatory")
     private String password;
-    private String roleName;
+    private Long roleId;
 }

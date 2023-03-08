@@ -28,7 +28,7 @@ public class UserRestController {
 
     @PostMapping("/createUser")
     public ResponseEntity<Void> saveUser(@Valid @RequestBody UserRequestDto userRequestDto){
-        userHandler.saveUser(userRequestDto);
+        userHandler.saveUser(userRequestDto, 2L);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 

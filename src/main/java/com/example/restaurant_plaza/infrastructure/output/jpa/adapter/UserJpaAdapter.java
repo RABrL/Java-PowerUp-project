@@ -9,6 +9,7 @@ import com.example.restaurant_plaza.infrastructure.output.jpa.entity.UserEntity;
 import com.example.restaurant_plaza.infrastructure.output.jpa.mapper.IUserEntityMapper;
 import com.example.restaurant_plaza.infrastructure.output.jpa.repository.IUserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 
@@ -17,13 +18,18 @@ public class UserJpaAdapter implements IUserPersistencePort {
 
     private final IUserRepository userRepository;
     private final IUserEntityMapper userEntityMapper;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public void saveUser(User user) {
-        if(userRepository.findByDni(user.getDni()).isPresent()) {
+        if(userRepository.findByDni(user.getDni()).isPresent() ||
+                userRepository.findByEmail(user.getEmail()).isPresent()
+        ) {
             throw new UserAlreadyExistException();
         }
-        userRepository.save(userEntityMapper.toEntity(user));
+        UserEntity userEntity = userEntityMapper.toEntity(user);
+        userEntity.setPassword(passwordEncoder.encode(user.getPassword()));
+        userRepository.save(userEntity);
     }
 
     @Override

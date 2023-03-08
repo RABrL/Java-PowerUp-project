@@ -2,6 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.0.2'
 	id 'io.spring.dependency-management' version '1.1.0'
+	id 'jacoco'
 }
 
 group = 'com.example'
@@ -33,6 +34,8 @@ dependencies {
 	implementation "io.jsonwebtoken:jjwt-api:${jwtVersion}"
 	implementation "io.jsonwebtoken:jjwt-jackson:${jwtVersion}"
 	implementation "io.jsonwebtoken:jjwt-impl:${jwtVersion}"
+    implementation 'org.jetbrains:annotations:23.0.0'
+	implementation 'org.jetbrains:annotations:23.0.0'
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	annotationProcessor 'org.projectlombok:lombok'

@@ -1,6 +1,9 @@
-package com.example.restaurant_plaza.infrastructure.security.auth;
+package com.example.restaurant_plaza.infrastructure.input.rest;
 
+import com.example.restaurant_plaza.application.dto.request.LoginRequestDto;
 import com.example.restaurant_plaza.application.dto.request.UserRequestDto;
+import com.example.restaurant_plaza.application.dto.response.AuthResponseDto;
+import com.example.restaurant_plaza.infrastructure.security.auth.AuthenticationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,12 +20,12 @@ public class AuthRestController {
   private final AuthenticationService service;
 
   @PostMapping("/register")
-  public ResponseEntity<AuthenticationResponse> register (@Valid @RequestBody UserRequestDto request) {
+  public ResponseEntity<AuthResponseDto> register (@Valid @RequestBody UserRequestDto request) {
     return ResponseEntity.ok(service.register(request));
   }
 
   @PostMapping("/login")
-  public ResponseEntity<AuthenticationResponse> login (@Valid @RequestBody LoginRequest request ) {
+  public ResponseEntity<AuthResponseDto> login (@Valid @RequestBody LoginRequestDto request ) {
     return ResponseEntity.ok(service.login(request));
   }
 }
