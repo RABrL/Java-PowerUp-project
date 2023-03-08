@@ -1,6 +1,8 @@
 package com.example.restaurant_plaza.application.handler.impl;
 
+import com.example.restaurant_plaza.application.dto.request.LoginRequestDto;
 import com.example.restaurant_plaza.application.dto.request.UserRequestDto;
+import com.example.restaurant_plaza.application.dto.response.AuthResponseDto;
 import com.example.restaurant_plaza.application.dto.response.UserResponseDto;
 import com.example.restaurant_plaza.application.handler.IUserHandler;
 import com.example.restaurant_plaza.application.mapper.IUserRequestMapper;
@@ -53,5 +55,18 @@ public class UserHandler implements IUserHandler {
     @Override
     public void deleteUserByDni(String dni) {
         userServicePort.deleteUserByDni(dni);
+    }
+
+    @Override
+    public AuthResponseDto register(@NotNull UserRequestDto request) {
+        request.setRoleId(1L);
+        String jwtToken = userServicePort.saveUser(userRequestMapper.toUser(request));
+        return AuthResponseDto.builder().token(jwtToken).build();
+    }
+
+    @Override
+    public AuthResponseDto login(@NotNull LoginRequestDto request) {
+        String jwtToken = userServicePort.login(request.getEmail(), request.getPassword());
+        return AuthResponseDto.builder().token(jwtToken).build();
     }
 }

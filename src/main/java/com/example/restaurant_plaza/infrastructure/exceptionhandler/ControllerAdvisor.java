@@ -1,5 +1,6 @@
 package com.example.restaurant_plaza.infrastructure.exceptionhandler;
 
+import com.example.restaurant_plaza.infrastructure.exception.EmailOrPasswordIncorrectException;
 import com.example.restaurant_plaza.infrastructure.exception.NoDataFoundException;
 import com.example.restaurant_plaza.infrastructure.exception.UserAlreadyExistException;
 import com.example.restaurant_plaza.infrastructure.exception.UserNotFoundException;
@@ -46,5 +47,11 @@ public class ControllerAdvisor {
     public ResponseEntity<Map<String, String>> handleUserAlreadyExistException(UserAlreadyExistException ex) {
         return ResponseEntity.status(HttpStatus.CONFLICT)
                 .body(Collections.singletonMap(MESSAGE,ExceptionResponse.USER_ALREADY_EXIST.getMessage()));
+    }
+
+    @ExceptionHandler(EmailOrPasswordIncorrectException.class)
+    public ResponseEntity<Map<String, String>> handleEmailOrPasswordIncorrectException(EmailOrPasswordIncorrectException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(Collections.singletonMap(MESSAGE, ExceptionResponse.EMAIL_OR_PASSWORD_INCORRECT.getMessage()));
     }
 }

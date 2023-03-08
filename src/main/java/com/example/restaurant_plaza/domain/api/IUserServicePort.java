@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface IUserServicePort {
 
-    void saveUser(User user);
+    String saveUser(User user);
 
     List<User> getAllUsers();
 
@@ -17,4 +17,6 @@ public interface IUserServicePort {
     void updateUser(User user);
 
     void deleteUserByDni(String dni);
+
+    String login(String email, String password);
 }

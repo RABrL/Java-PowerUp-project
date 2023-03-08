@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface IUserPersistencePort {
 
-    void saveUser(User user);
+    String saveUser(User user);
 
     List<User> getAllUsers();
 
@@ -17,4 +17,6 @@ public interface IUserPersistencePort {
     void updateUser(User user);
 
     void deleteUserByDni(String dni);
+
+    String login(String email, String password);
 }
